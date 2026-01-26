@@ -1,7 +1,13 @@
-output "name" {
-  value = google_service_account.this.display_name
+output "service_account_emails" {
+  value = {
+    for k, sa in google_service_account.this :
+    k => sa.email
+  }
 }
 
-output "id" {
-  value = google_service_account.this.id
+output "service_account_names" {
+  value = {
+    for k, sa in google_service_account.this :
+    k => sa.name
+  }
 }
