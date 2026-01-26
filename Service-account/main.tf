@@ -8,14 +8,7 @@ resource "google_service_account" "this" {
 }
 
 resource "google_project_iam_member" "sa_roles" {
-  for_each = {
-    for sa_key, sa in google_service_account.this :
-    for role in var.roles :
-    "${sa_key}-${role}" => {
-      email = sa.email
-      role  = role
-    }
-  }
+  for_each = local.sa_role_bindings
 
   project = var.project_id
   role    = each.value.role
